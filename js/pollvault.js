@@ -71,6 +71,7 @@ function show(snapshot) {
     var posts = snapshot.val();
     $("#newposts").empty();
     $("#posts").empty();
+    scrollState = 1;
     for (var postid in posts) {
         showChoices(posts, postid, '#newposts');
     }
@@ -114,7 +115,7 @@ function showOpenChoices(post, posts, postid, containerId) {
     for (var choice in choices) {
         jQuery('<a/>', {
             id : choice + postid,
-            class : "list-group-item " + postid,
+            class : "row choice list-group-item " + postid,
             text : choices[choice]["text"],
             onclick : "answer(\"" + choice + "\", \"" + postid + "\"); return false;"
         }).appendTo("#" + postid);
@@ -150,8 +151,8 @@ function showClosedChoices(post, posts, postid, containerId) {
         }
         jQuery('<a/>', {
             id : choice + postid,
-                text : choices[choice]["text"],
-            class : "list-group-item list-group-item-" + color + " " + postid,
+            text : choices[choice]["text"],
+            class : "row choice list-group-item list-group-item-" + color + " " + postid,
         }).appendTo("#" + postid);
         
         jQuery('<div/>', {
