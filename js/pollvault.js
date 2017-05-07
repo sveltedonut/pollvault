@@ -82,7 +82,7 @@ function show(snapshot) {
 //show individual post
 function showChoices(posts, postid, containerId) {
     var post = posts[postid];
-    
+
     if (answers != undefined) {
         if (answers[postid] != null) {
             showClosedChoices(post, posts, postid, containerId)
@@ -132,14 +132,14 @@ function showClosedChoices(post, posts, postid, containerId) {
     jQuery('<li/>', {
         id : "question" + postid,
         class : "list-group-item",
-        
+
         text : post["question"]
     }).appendTo("#" + postid);
     $("#question" + postid).wrapInner("<h4></h4>");
 
     var choices = post["choices"];
     var totalCount = 0;
-    
+
     for (var choice in choices) {
         totalCount += choices[choice]["count"];
     }
@@ -154,19 +154,19 @@ function showClosedChoices(post, posts, postid, containerId) {
             text : choices[choice]["text"],
             class : "row choice list-group-item list-group-item-" + color + " " + postid,
         }).appendTo("#" + postid);
-        
+
         jQuery('<div/>', {
             id : "data-" + choice + postid,
             class : "col-xs-8 pull-right " + postid,
         }).appendTo("#" + choice + postid);
-        
+
         jQuery('<div/>', {
             id : "progress-" + choice + postid,
             class : "progress " + postid,
         }).appendTo("#data-" + choice + postid);
-        
+
         var percentage = Number(((choices[choice]["count"]/totalCount)*100).toFixed(1));
-        
+
         if (choice == answers[postid]) {
             jQuery('<div/>', {
                 id: "bar-" + choice + postid,
@@ -178,7 +178,7 @@ function showClosedChoices(post, posts, postid, containerId) {
                 "aria-valuemax" : totalCount
             }).appendTo("#progress-" + choice + postid);
         }
-        
+
         else {
             jQuery('<div/>', {
                 id: "bar-" + choice + postid,
@@ -205,17 +205,17 @@ $(window).scroll(function() {
 function showOld(snapshot) {
     //console.log(snapshot.val());
     var posts = snapshot.val();
-    
+
     jQuery('<div/>', {
         id : "posts" + scrollState
     }).appendTo("#posts");
-    
+
     var i = 0;
     for (var postid in posts) {
         if (i == 20) {
             break;
         }
-        
+
         if ($("#" + postid).length == 0) {
             showChoices(posts, postid, "#posts" + scrollState);
             i++;
@@ -233,10 +233,10 @@ function answer(choice, id) {
     $("." + id).addClass("list-group-item-default");
     $("#" + choice + id).removeClass("list-group-item-default");
     $("#" + choice + id).addClass("list-group-item-primary");
-    
+
     var countRef = ref.child("posts").child(id).child("choices");
     countRef.once("value", updateBar);
-    
+
     function updateBar(data) {
         choices = data.val();
         console.log(choices);
@@ -245,7 +245,7 @@ function answer(choice, id) {
             totalCount += choices[pchoice]["count"];
         }
         console.log(totalCount);
-        
+
         for (var pchoice in choices) {
             jQuery('<div/>', {
                 id : "data-" + pchoice + id,
@@ -288,20 +288,20 @@ function answer(choice, id) {
         }
     }
 }
-       
+
 //submit function
 $(function() {
     $("#submit").submit(function(e) {
-        
+
         //Prevent refresh
         e.preventDefault();
-        
+
         //Store form values
         var values = {};
         $.each($('#submit').serializeArray(), function(i, field) {
             values[field.name] = field.value;
         });
-        
+
         //push values to firebase
         var postRef = ref.child("posts");
         var newPostRef = postRef.push();
@@ -331,7 +331,7 @@ $(function() {
                 count: 0
             });
         }
-    
+
         //clear form
         $(this)[0].reset();
     });
