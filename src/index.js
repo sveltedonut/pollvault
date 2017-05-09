@@ -1,8 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import 'bootstrap/dist/css/bootstrap.css';
 import './index.css';
 import * as firebase from 'firebase';
-import 'bootstrap/dist/css/bootstrap.css';
 
 class Page extends React.Component {
     constructor() {
