@@ -15,14 +15,7 @@ class Page extends React.Component {
             posts: {},
             answers: {},
         };
-        const config = {
-            apiKey: "AIzaSyAgsh9bvpFszokoI-Q47m9PVsQuajaH_1s",
-            authDomain: "pv1.firebaseapp.com",
-            databaseURL: "https://pv1.firebaseio.com",
-            projectId: "firebase-pv1",
-            storageBucket: "firebase-pv1.appspot.com",
-            messagingSenderId: "503481450871"
-        };
+        const config = {/*INSERT CONFIG OBJECT*/};
         this.db = firebase.initializeApp(config).database();
         this.provider = new firebase.auth.FacebookAuthProvider();
         this.ref = this.db.ref('posts').limitToLast(20);
